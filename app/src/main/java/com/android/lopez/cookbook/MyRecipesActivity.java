@@ -1,8 +1,12 @@
 package com.android.lopez.cookbook;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,17 +16,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+
+import java.util.List;
 
 public class MyRecipesActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener{
+    
+    private static RecyclerView mRecyclerView;
+    private static SwipeRefreshLayout mRefreshLayout;
+    private static CookbookViewAdapter mAdapter;
+    private static List<RecipeObject> mRecipeList;
+    private static Context mContext;
+    private static Spinner mCategorySpinner;
+
+    public static void setData(List<RecipeObject> recipeList){
+        mRecipeList = recipeList;
+    }
+
+    public static List<RecipeObject> getData(){
+        return mRecipeList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
+
+        //----TOOLBAR----//
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //----RECYCLER VIEW----//
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerRecipes);
+        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshRecipes);
+        mRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
+        mAdapter = new CookbookViewAdapter(mContext, getData());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //----FAB----//
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +66,7 @@ public class MyRecipesActivity extends AppCompatActivity
             }
         });
 
+        //----NAVIGATION DRAWER----//
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -97,5 +132,10 @@ public class MyRecipesActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }
