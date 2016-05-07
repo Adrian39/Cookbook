@@ -18,11 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class MyRecipesActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener{
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     
     private static RecyclerView mRecyclerView;
     private static SwipeRefreshLayout mRefreshLayout;
@@ -43,15 +44,19 @@ public class MyRecipesActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
+        mContext = getApplicationContext();
 
         //----TOOLBAR----//
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //----RECYCLER VIEW----//
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerRecipes);
+        //--REFRESH LAYOUT--//
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshRecipes);
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
+        mRefreshLayout.setOnRefreshListener(this);
+
+        //----RECYCLER VIEW----//
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerRecipes);
         mAdapter = new CookbookViewAdapter(mContext, getData());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -136,6 +141,12 @@ public class MyRecipesActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        Toast.makeText(mContext, "You refreshed the view!", Toast.LENGTH_LONG).show();
 
     }
 }
