@@ -1,10 +1,12 @@
 package com.android.lopez.cookbook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,8 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.lopez.cookbook.recipes.NewRecipeActivity;
 
 import java.util.List;
 
@@ -71,8 +75,7 @@ public class MyRecipesActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                onFABClick();
             }
         });
 
@@ -153,6 +156,11 @@ public class MyRecipesActivity extends AppCompatActivity
     @Override
     public void onRefresh() {
         Toast.makeText(mContext, "You refreshed the view!", Toast.LENGTH_LONG).show();
-
     }
+
+    public void onFABClick(){
+        Intent intent = new Intent(this, NewRecipeActivity.class);
+        startActivity(intent);
+    }
+
 }
