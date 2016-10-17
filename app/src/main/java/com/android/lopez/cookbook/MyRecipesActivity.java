@@ -1,6 +1,7 @@
 package com.android.lopez.cookbook;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,7 +30,7 @@ public class MyRecipesActivity extends AppCompatActivity
     private static SwipeRefreshLayout mRefreshLayout;
     private static CookbookViewAdapter mAdapter;
     private static List<RecipeObject> mRecipeList;
-    private static Context mContext;
+    private Context mContext;
     private static Spinner mCategorySpinner;
 
     public static void setData(List<RecipeObject> recipeList){
@@ -40,11 +41,15 @@ public class MyRecipesActivity extends AppCompatActivity
         return mRecipeList;
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_recipes);
         mContext = getApplicationContext();
+
+        //----SQL HELPER----//
 
         //----TOOLBAR----//
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -80,6 +85,7 @@ public class MyRecipesActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
