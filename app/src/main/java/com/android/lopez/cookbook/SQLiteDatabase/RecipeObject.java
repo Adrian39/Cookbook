@@ -1,4 +1,6 @@
-package com.android.lopez.cookbook;
+package com.android.lopez.cookbook.SQLiteDatabase;
+
+import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
 
 import java.io.File;
 import java.util.List;
@@ -7,17 +9,17 @@ import java.util.List;
  * Created by JacoboAdrian on 4/17/2016.
  */
 public class RecipeObject {
-    private String myID, myName, myCategory, myTime, myPreparation;
-    private int myServings;
+    private String myName, myCategory, myTime, myPreparation;
+    private int myID, myServings;
     private File myImageFile;
     private List<Integer> myAmounts;
     private List<IngredientObject> myIngredients;
 
-    public String getMyID() {
+    public int getMyID() {
         return myID;
     }
 
-    public void setMyID(String myID) {
+    public void setMyID(int myID) {
         this.myID = myID;
     }
 

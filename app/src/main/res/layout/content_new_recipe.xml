@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_new_recipe"
@@ -13,29 +13,64 @@
     tools:context="com.android.lopez.cookbook.recipes.NewRecipeActivity"
     tools:showIn="@layout/activity_new_recipe">
 
-
-    <EditText
-        android:id="@+id/txtRecipeName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:fontFamily="sans-serif"
-        android:hint="Recipe Name"
-        android:inputType="textPersonName"
-        android:textSize="16sp" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtRecipePreparation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtRecipeName"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:fontFamily="sans-serif"
-        android:hint="Preparation"
-        android:inputType="textPersonName"
-        android:textSize="16sp" />
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/txtRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:hint="Recipe Name"
+                android:inputType="textPersonName"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/txtIngredients"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtRecipeName"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:text="@string/ingredients"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/txtRecipePreparation"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtIngredients"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:hint="Preparation"
+                android:inputType="textPersonName"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnAddIngredient"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_below="@+id/txtRecipeName"
+                android:layout_toEndOf="@+id/txtIngredients"
+                android:text="@string/action_add"
+                android:background="@color/colorWhite"
+                android:textSize="14dp"
+                android:textColor="@color/colorAccent"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

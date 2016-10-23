@@ -1,19 +1,19 @@
-package com.android.lopez.cookbook;
+package com.android.lopez.cookbook.SQLiteDatabase;
 
 /**
  * Created by JacoboAdrian on 4/17/2016.
  */
 public class IngredientObject {
-    private String myID;
+    private int myID;
     private String myName;
     private String Category;
     private int myStock, myNeeded;
 
-    public String getMyID() {
+    public int getMyID() {
         return myID;
     }
 
-    public void setMyID(String myID) {
+    public void setMyID(int myID) {
         this.myID = myID;
     }
 
