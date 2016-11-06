@@ -17,31 +17,24 @@ import java.util.List;
  */
 public class DBAdapter {
 
-    SQLiteDatabase db;
     DBHelper dbHelper;
+    private Context context;
+
+    public void openDB(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if(db.isOpen()){
+            Toast.makeText(context, "Successfully opened database", Toast.LENGTH_LONG).show();
+        }
+    }
 
     public DBAdapter(Context context) {
+        this.context = context;
         dbHelper = new DBHelper(context);
-    }
-
-    public void openDB() {
-        try {
-            db = dbHelper.getWritableDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void closeDB() {
-        try {
-            dbHelper.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean insertRecipeData(String name, String category, int time, String preparation, int servings) {
 
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBHelper.T1_NAME, name);
@@ -58,6 +51,8 @@ public class DBAdapter {
     }
 
     public boolean insertIngredientData(String name, String category) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         try {
             ContentValues contentValues = new ContentValues();
@@ -89,11 +84,13 @@ public class DBAdapter {
 
     //SEARCH AND FILTERS
     public Cursor searchIngredients(String searchTerm) {
-        Cursor cursor = null;
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor;
         String[] columns = {DBHelper.T2_KEY_ID, DBHelper.T2_NAME};
-        if (searchTerm != null && searchTerm.length() > 0){
-            String querry = "SELECT * FROM " + DBHelper.TABLE_2_NAME + " WHERE " + DBHelper.T2_NAME + " LIKE '%" + searchTerm + "%'";
-            cursor = db.rawQuery(querry, null);
+        if (searchTerm != null && searchTerm.length() > 0) {
+            String query = "SELECT * FROM " + DBHelper.TABLE_2_NAME + " WHERE " + DBHelper.T2_NAME + " LIKE '%" + searchTerm + "%'";
+            cursor = db.rawQuery(query, null);
             return cursor;
         }
 
@@ -101,10 +98,20 @@ public class DBAdapter {
         return cursor;
     }
 
+    public Cursor getAllIngredients() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor;
+        String[] columns = {DBHelper.T2_KEY_ID, DBHelper.T2_NAME};
+
+        String query = "SELECT * FROM " + DBHelper.TABLE_2_NAME;
+        cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
     static class DBHelper extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "cookbook";     //Database name
-        private static final int SCHEME_VERSION = 2;
+        private static final int SCHEME_VERSION = 7;
 
         private static final String TABLE_1_NAME = "Recipes", T1_KEY_ID = "_id", T1_NAME = "Name",
                 T1_CATEGORY = "Category", T1_TIME = "Time", T1_PREPARATION = "Preparation",
@@ -136,8 +143,9 @@ public class DBAdapter {
                         T1_PREPARATION + " TEXT, " +
                         T1_SERVINGS + " INTEGER, " +
                         T1_IMAGE_FILE + " BLOB);");
+                Toast.makeText(context, "Successfully opened database", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
-                Toast.makeText(context, "An error has occurred when attempting to create the 'Recipes Table'", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "An error has occurred when attempting to create the 'Recipes Table'", Toast.LENGTH_SHORT).show();
             }
 
             //----TABLE 2 QUERY: INGREDIENTS TABLE----//
@@ -147,8 +155,9 @@ public class DBAdapter {
                         T2_CATEGORY + " VARCHAR(50), " +
                         T2_IN_STOCK + " INTEGER, " +
                         T2_NEEDED + " INTEGER);");
+                Toast.makeText(context, "Successfully opened database", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
-                Toast.makeText(context, "An error has occurred when attempting to create the 'Ingredient Table'", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "An error has occurred when attempting to create the 'Ingredient Table'", Toast.LENGTH_SHORT).show();
             }
 
             //----TABLE 3 QUERY: RECIPE/INGREDIENT LINK TABLE----//
@@ -156,8 +165,9 @@ public class DBAdapter {
                 db.execSQL("CREATE TABLE " + TABLE_3_NAME + "(" + T3_FK_INGREDIENT + " INTEGER, " +
                         T3_FK_RECIPE + " INTEGER, " +
                         T3_QUANTITY + " INTEGER);");
+                Toast.makeText(context, "Successfully opened database", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
-                Toast.makeText(context, "An error has occurred when attempting to create the 'Link Table'", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "An error has occurred when attempting to create the 'Link Table'", Toast.LENGTH_SHORT).show();
             }
 
             try {
@@ -168,17 +178,52 @@ public class DBAdapter {
                 contentValues.put(DBHelper.T1_PREPARATION, "Test");
                 contentValues.put(DBHelper.T1_SERVINGS, 1);
                 db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully added test recipe", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
             try {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T2_NAME, "Test");
+                contentValues.put(DBHelper.T2_NAME, "Alpha");
                 contentValues.put(DBHelper.T2_CATEGORY, "Test");
                 contentValues.put(DBHelper.T2_IN_STOCK, 1);
                 contentValues.put(DBHelper.T2_NEEDED, 1);
                 db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully added test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Bravo");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test2");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully second test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Charlie");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test3");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully third test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Echo");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test4");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully fourth test ingredient", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -193,7 +238,7 @@ public class DBAdapter {
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_3_NAME);
                 onCreate(db);
             } catch (SQLException e) {
-                Toast.makeText(context, "An error has occurred when attempting to delete the Database", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "An error has occurred when attempting to delete the Database", Toast.LENGTH_SHORT).show();
             }
         }
     }

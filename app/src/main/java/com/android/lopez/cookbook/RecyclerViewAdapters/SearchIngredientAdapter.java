@@ -1,27 +1,38 @@
 package com.android.lopez.cookbook.RecyclerViewAdapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
-
+import com.android.lopez.cookbook.Filters.IngredientFilter;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
+import java.util.ArrayList;
 
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Modyfied by JacoboAdrian on 10/22/2016.
  */
 
-public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredientAdapter.MyViewHolder> {
-    List<IngredientObject> ingredientObjectList = Collections.emptyList();
+public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredientAdapter.MyViewHolder> implements Filterable{
 
-    public SearchIngredientAdapter(List<IngredientObject> ingredients){
+    ArrayList<IngredientObject> ingredientObjectList = new ArrayList<>();
+    ArrayList<IngredientObject> ingredientFilteredList = new ArrayList<>();
+    IngredientFilter filter;
+
+
+    public SearchIngredientAdapter(ArrayList<IngredientObject> ingredients){
         this.ingredientObjectList = ingredients;
+        this.ingredientFilteredList = ingredients;
+    }
+
+    public void SetValues(ArrayList<IngredientObject> newIngredientValues){
+        this.ingredientObjectList = newIngredientValues;
     }
 
     @Override
@@ -39,6 +50,14 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
     @Override
     public int getItemCount() {
         return ingredientObjectList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new IngredientFilter(ingredientFilteredList,this);
+        }
+        return filter;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

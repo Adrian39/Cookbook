@@ -1,5 +1,7 @@
 package com.android.lopez.cookbook.recipes;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +13,10 @@ import android.widget.Button;
 
 import com.android.lopez.cookbook.Dialogs.IngredientDialog;
 import com.android.lopez.cookbook.R;
+import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
+import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
+
+import java.util.List;
 
 public class NewRecipeActivity extends AppCompatActivity {
     Button btnAddIngredient;
@@ -21,7 +27,6 @@ public class NewRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_recipe);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

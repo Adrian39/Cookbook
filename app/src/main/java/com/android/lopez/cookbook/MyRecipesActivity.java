@@ -2,6 +2,7 @@ package com.android.lopez.cookbook;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,9 +21,11 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.RecipeObject;
 import com.android.lopez.cookbook.recipes.NewRecipeActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyRecipesActivity extends AppCompatActivity
@@ -31,15 +34,15 @@ public class MyRecipesActivity extends AppCompatActivity
     private static RecyclerView mRecyclerView;
     private static SwipeRefreshLayout mRefreshLayout;
     private static CookbookViewAdapter mAdapter;
-    private static List<RecipeObject> mRecipeList;
+    private static ArrayList<RecipeObject> mRecipeList = new ArrayList<RecipeObject>();
     private Context mContext;
     private static Spinner mCategorySpinner;
 
-    public static void setData(List<RecipeObject> recipeList){
+    public static void setData(ArrayList<RecipeObject> recipeList){
         mRecipeList = recipeList;
     }
 
-    public static List<RecipeObject> getData(){
+    public static ArrayList<RecipeObject> getData(){
         return mRecipeList;
     }
 
@@ -157,6 +160,8 @@ public class MyRecipesActivity extends AppCompatActivity
     }
 
     public void onFABClick(){
+        DBAdapter adapter = new DBAdapter(mContext);
+        adapter.openDB();
         Intent intent = new Intent(this, NewRecipeActivity.class);
         startActivity(intent);
     }
