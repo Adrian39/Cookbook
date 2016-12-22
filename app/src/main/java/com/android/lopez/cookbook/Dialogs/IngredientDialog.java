@@ -1,16 +1,22 @@
 package com.android.lopez.cookbook.Dialogs;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowId;
 
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.SearchIngredientAdapter;
@@ -32,10 +38,19 @@ public class IngredientDialog extends DialogFragment {
     private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     Context context;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.ingredient_dialog, null);
-        searchView = (SearchView) view.findViewById(R.id.srchIngredients);
+        View view = inflater.inflate(R.layout.ingredient_dialog, container, false);
+
+        //DECLARE TOOLBAR//
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.title_add_ingredient));
+
+        //DECLARE SEARCH VIEW//
+        searchView = (SearchView) view.findViewById(R.id.searchIngredients);
+        searchView.setIconified(false);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recIngredientSearch);
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -58,6 +73,13 @@ public class IngredientDialog extends DialogFragment {
         });
 
         return view;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     @Override
