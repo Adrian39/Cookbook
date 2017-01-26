@@ -111,7 +111,7 @@ public class DBAdapter {
     static class DBHelper extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "cookbook";     //Database name
-        private static final int SCHEME_VERSION = 7;
+        private static final int SCHEME_VERSION = 9;
 
         private static final String TABLE_1_NAME = "Recipes", T1_KEY_ID = "_id", T1_NAME = "Name",
                 T1_CATEGORY = "Category", T1_TIME = "Time", T1_PREPARATION = "Preparation",
@@ -218,7 +218,7 @@ public class DBAdapter {
             }
             try {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T2_NAME, "Echo");
+                contentValues.put(DBHelper.T2_NAME, "Delta");
                 contentValues.put(DBHelper.T2_CATEGORY, "Test4");
                 contentValues.put(DBHelper.T2_IN_STOCK, 1);
                 contentValues.put(DBHelper.T2_NEEDED, 1);
@@ -227,7 +227,94 @@ public class DBAdapter {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Echo");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test5");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully fifth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Foxtrot");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test6");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully sixth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Golf");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test7");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully seventh test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Hotel");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test8");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully eighth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "India");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test9");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully ninth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Juliet");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test10");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully tenth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Kilo");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test11");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully eleventh test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DBHelper.T2_NAME, "Lima");
+                contentValues.put(DBHelper.T2_CATEGORY, "Test12");
+                contentValues.put(DBHelper.T2_IN_STOCK, 1);
+                contentValues.put(DBHelper.T2_NEEDED, 1);
+                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+                Toast.makeText(context, "Successfully twelfth test ingredient", Toast.LENGTH_SHORT).show();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

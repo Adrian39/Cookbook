@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.lopez.cookbook.Filters.IngredientFilter;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
@@ -21,14 +23,16 @@ import java.util.ArrayList;
 
 public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredientAdapter.MyViewHolder> implements Filterable{
 
-    ArrayList<IngredientObject> ingredientObjectList = new ArrayList<>();
-    ArrayList<IngredientObject> ingredientFilteredList = new ArrayList<>();
-    IngredientFilter filter;
+    private ArrayList<IngredientObject> ingredientObjectList = new ArrayList<>();
+    private ArrayList<IngredientObject> ingredientFilteredList = new ArrayList<>();
+    private IngredientFilter filter;
+    private Context mContext;
 
 
-    public SearchIngredientAdapter(ArrayList<IngredientObject> ingredients){
+    public SearchIngredientAdapter(ArrayList<IngredientObject> ingredients, Context context){
         this.ingredientObjectList = ingredients;
         this.ingredientFilteredList = ingredients;
+        this.mContext = context;
     }
 
     public void SetValues(ArrayList<IngredientObject> newIngredientValues){
@@ -60,11 +64,17 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
         return filter;
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtIngredientName;
         public MyViewHolder(View view){
             super(view);
             txtIngredientName = (TextView) itemView.findViewById(R.id.txtRowIngredientName);
+            txtIngredientName.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(mContext, "Added " + txtIngredientName.getText()+ " to the recipe", Toast.LENGTH_LONG).show();
         }
     }
     

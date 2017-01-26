@@ -2,4 +2,8 @@
 <resources>
     <string name="app_name">Cookbook</string>
     <string name="action_settings">Ajustes</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="action_add">Agregar</string>
+    <string name="title_add_ingredient">Agregar Ingrediente</string>
+    <string name="hint_search">Buscar...</string>
 </resources>

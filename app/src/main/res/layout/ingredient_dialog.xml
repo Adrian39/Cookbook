@@ -24,8 +24,9 @@
 
 
     <LinearLayout
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         android:layout_marginLeft="24dp"
@@ -33,7 +34,7 @@
         android:layout_marginTop="24dp"
         android:layout_below="@+id/appBarLayout">
 
-        <SearchView
+        <android.support.v7.widget.SearchView
             android:id="@+id/searchIngredients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +47,16 @@
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:layout_below="@+id/searchIngredients"/>
+
+        <Button android:id="@+id/btnAddIngredient"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/action_add"
+            android:layout_below="@+id/search_layout"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorWhite"
+            android:elevation="2dp"
+            android:layout_marginTop="48dp"/>
 
     </LinearLayout>
 
