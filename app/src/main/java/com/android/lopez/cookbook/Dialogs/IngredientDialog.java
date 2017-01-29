@@ -38,31 +38,40 @@ public class IngredientDialog extends DialogFragment {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    SearchIngredientAdapter mAdapter;
-    SearchView searchView;
-    private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     Context context;
     Button btnAddIngredient;
+    SearchIngredientAdapter mAdapter;
+    SearchView searchView;
+    Toolbar toolbar;
+    private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.ingredient_dialog, container, false);
 
-        //SET BUTTON ONCLICK AND VISIBILITY TO GONE
+        //INITIATE UI VARIABLES
         btnAddIngredient = (Button) view.findViewById(R.id.btnAddIngredient);
-        btnAddIngredient.setVisibility(View.GONE);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        searchView = (SearchView) view.findViewById(R.id.searchIngredients);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recIngredientSearch);
 
-        //DECLARE TOOLBAR//
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        //SET BUTTON ONCLICK AND VISIBILITY TO GONE
+        btnAddIngredient.setVisibility(View.GONE);
+        btnAddIngredient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addIngredientToDataBase(searchView.getQuery().toString());
+            }
+        });
+
+        //SET TOOLBAR'S TITLE
         toolbar.setTitle(getString(R.string.title_add_ingredient));
 
-        //DECLARE SEARCH VIEW//
-        searchView = (SearchView) view.findViewById(R.id.searchIngredients);
+        //SET SEARCH VIEW'S ICON TO FALSE
         searchView.setIconified(false);
 
-        //DECLARE RECYCLER VIEW
-        recyclerView = (RecyclerView) view.findViewById(R.id.recIngredientSearch);
+        //SET RECYCLER VIEW'S ADAPTER AND LAYOUT
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         setIngredientData();
@@ -124,12 +133,20 @@ public class IngredientDialog extends DialogFragment {
     }
 
     void addIngredientToDataBase(String ingredient){
-
-        try {
-            Toast.makeText(context, "Successfully added " + ingredient + " to Ingredient Database", Toast.LENGTH_SHORT).show();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DBAdapter dbAdapter = new DBAdapter(context);
+        dbAdapter.insertIngredientData(ingredient);
+        /*ingredientList.clear();
+        IngredientObject newIngredient;
+        Cursor cursor = dbAdapter.getAllIngredients();
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            newIngredient = new IngredientObject();
+            newIngredient.setMyID(id);
+            newIngredient.setMyName(name);
+            ingredientList.add(newIngredient);
+        }*/
+        //NEED TO ADD INGREDIENT TO ARRAY FOR THIS RECIPE BEFORE ADDING TO DB
     }
 
 }

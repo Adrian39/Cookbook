@@ -66,6 +66,20 @@ public class DBAdapter {
         return false;
     }
 
+    public boolean insertIngredientData(String name){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        try{
+            ContentValues newIngredient = new ContentValues();
+            newIngredient.put(DBHelper.T2_NAME, name);
+            db.insert(DBHelper.TABLE_2_NAME, null, newIngredient);
+            return true;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean insertRecIngData(int ingredientID, int recipeID, int amountNeeded) {
 
         try {
