@@ -12,9 +12,13 @@ import android.view.Window;
 import android.widget.Button;
 import com.android.lopez.cookbook.Dialogs.IngredientDialog;
 import com.android.lopez.cookbook.R;
+import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
+
+import java.util.ArrayList;
 
 public class NewRecipeActivity extends AppCompatActivity {
     Button btnAddIngredient;
+    private ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,19 @@ public class NewRecipeActivity extends AppCompatActivity {
                 transaction.setTransition(transaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();*/
 
+
+
             }
         });
 
+    }
+
+    public ArrayList<IngredientObject> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredient(IngredientObject newIngredient) {
+        ingredientList.add(newIngredient);
     }
 
 }

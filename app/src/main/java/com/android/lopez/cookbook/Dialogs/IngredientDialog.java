@@ -27,6 +27,7 @@ import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.SearchIngredientAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
+import com.android.lopez.cookbook.recipes.NewRecipeActivity;
 
 import java.util.ArrayList;
 
@@ -135,9 +136,9 @@ public class IngredientDialog extends DialogFragment {
     void addIngredientToDataBase(String ingredient){
         DBAdapter dbAdapter = new DBAdapter(context);
         dbAdapter.insertIngredientData(ingredient);
-        /*ingredientList.clear();
+        ingredientList.clear();
         IngredientObject newIngredient;
-        Cursor cursor = dbAdapter.getAllIngredients();
+        /*Cursor cursor = dbAdapter.getAllIngredients();
         while (cursor.moveToNext()){
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
@@ -147,6 +148,9 @@ public class IngredientDialog extends DialogFragment {
             ingredientList.add(newIngredient);
         }*/
         //NEED TO ADD INGREDIENT TO ARRAY FOR THIS RECIPE BEFORE ADDING TO DB
+
+        NewRecipeActivity currentRecipe = (NewRecipeActivity) getActivity();
+        //currentRecipe.setIngredient(newIngredient);
     }
 
 }
