@@ -134,23 +134,19 @@ public class IngredientDialog extends DialogFragment {
     }
 
     void addIngredientToDataBase(String ingredient){
+
+        long newIngredientID;
         DBAdapter dbAdapter = new DBAdapter(context);
-        dbAdapter.insertIngredientData(ingredient);
+        newIngredientID = dbAdapter.insertIngredientData(ingredient);
         ingredientList.clear();
-        IngredientObject newIngredient;
-        /*Cursor cursor = dbAdapter.getAllIngredients();
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-            newIngredient = new IngredientObject();
-            newIngredient.setMyID(id);
-            newIngredient.setMyName(name);
-            ingredientList.add(newIngredient);
-        }*/
-        //NEED TO ADD INGREDIENT TO ARRAY FOR THIS RECIPE BEFORE ADDING TO DB
+        IngredientObject newIngredient = new IngredientObject();
+        newIngredient.setMyName(ingredient);
+        newIngredient.setMyID(newIngredientID);
 
         NewRecipeActivity currentRecipe = (NewRecipeActivity) getActivity();
-        //currentRecipe.setIngredient(newIngredient);
+        currentRecipe.setIngredient(newIngredient);
+
+        IngredientDialog.this.dismiss();
     }
 
 }

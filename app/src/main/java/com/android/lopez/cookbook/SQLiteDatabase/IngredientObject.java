@@ -4,16 +4,16 @@ package com.android.lopez.cookbook.SQLiteDatabase;
  * Created by JacoboAdrian on 4/17/2016.
  */
 public class IngredientObject {
-    private int myID;
+    private long myID;
     private String myName;
     private String Category;
     private int myStock, myNeeded;
 
-    public int getMyID() {
+    public long getMyID() {
         return myID;
     }
 
-    public void setMyID(int myID) {
+    public void setMyID(long myID) {
         this.myID = myID;
     }
 

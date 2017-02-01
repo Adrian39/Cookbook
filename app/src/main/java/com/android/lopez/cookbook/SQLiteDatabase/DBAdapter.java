@@ -32,9 +32,11 @@ public class DBAdapter {
         dbHelper = new DBHelper(context);
     }
 
-    public boolean insertRecipeData(String name, String category, int time, String preparation, int servings) {
+    public long insertRecipeData(String name, String category, int time, String preparation, int servings) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRecipeID = 0;
+
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBHelper.T1_NAME, name);
@@ -42,42 +44,44 @@ public class DBAdapter {
             contentValues.put(DBHelper.T1_TIME, time);
             contentValues.put(DBHelper.T1_PREPARATION, preparation);
             contentValues.put(DBHelper.T1_SERVINGS, servings);
-            db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
-            return true;
+            newRecipeID = db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
+            return newRecipeID;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return newRecipeID;
     }
 
-    public boolean insertIngredientData(String name, String category) {
+    public long insertIngredientData(String name, String category) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newIngredientID = 0;
 
         try {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBHelper.T2_NAME, name);
             contentValues.put(DBHelper.T2_CATEGORY, category);
-            db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
-            return true;
+            newIngredientID = db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+            return newIngredientID;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return newIngredientID;
     }
 
-    public boolean insertIngredientData(String name){
+    public long insertIngredientData(String name){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newIngredientID = 0;
 
         try{
             ContentValues newIngredient = new ContentValues();
             newIngredient.put(DBHelper.T2_NAME, name);
-            db.insert(DBHelper.TABLE_2_NAME, null, newIngredient);
-            return true;
+            newIngredientID = db.insert(DBHelper.TABLE_2_NAME, null, newIngredient);
+            return newIngredientID;
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return false;
+        return newIngredientID;
     }
 
     public boolean insertRecIngData(int ingredientID, int recipeID, int amountNeeded) {

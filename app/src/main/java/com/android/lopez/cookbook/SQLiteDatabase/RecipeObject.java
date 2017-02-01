@@ -10,16 +10,17 @@ import java.util.List;
  */
 public class RecipeObject {
     private String myName, myCategory, myTime, myPreparation;
-    private int myID, myServings;
+    private long myID;
+    private int myServings;
     private File myImageFile;
     private List<Integer> myAmounts;
     private List<IngredientObject> myIngredients;
 
-    public int getMyID() {
+    public long getMyID() {
         return myID;
     }
 
-    public void setMyID(int myID) {
+    public void setMyID(long myID) {
         this.myID = myID;
     }
 
