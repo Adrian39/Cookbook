@@ -80,8 +80,8 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext, "Added " + txtIngredientName.getText()+ " to the recipe", Toast.LENGTH_LONG).show();
             parentRecipeActivity.setIngredient(selectedIngredient);
+            Toast.makeText(mContext, "Added " + txtIngredientName.getText()+ " to the recipe", Toast.LENGTH_LONG).show();
         }
     }
     
