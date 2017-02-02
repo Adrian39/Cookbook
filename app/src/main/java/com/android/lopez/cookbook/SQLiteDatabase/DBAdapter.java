@@ -62,9 +62,11 @@ public class DBAdapter {
             contentValues.put(DBHelper.T2_NAME, name);
             contentValues.put(DBHelper.T2_CATEGORY, category);
             newIngredientID = db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
+            Toast.makeText(context, "Added " + name + " to database. ID: " + newIngredientID, Toast.LENGTH_LONG).show();
             return newIngredientID;
         } catch (SQLException e) {
             e.printStackTrace();
+            Toast.makeText(context, "Could not add " + name + " to the database.", Toast.LENGTH_LONG).show();
         }
         return newIngredientID;
     }
@@ -77,9 +79,11 @@ public class DBAdapter {
             ContentValues newIngredient = new ContentValues();
             newIngredient.put(DBHelper.T2_NAME, name);
             newIngredientID = db.insert(DBHelper.TABLE_2_NAME, null, newIngredient);
+            Toast.makeText(context, "Added " + name + " to database. ID: " + newIngredientID, Toast.LENGTH_LONG).show();
             return newIngredientID;
         } catch (SQLException e){
             e.printStackTrace();
+            Toast.makeText(context, "Could not add " + name + " to the database.", Toast.LENGTH_LONG).show();
         }
         return newIngredientID;
     }

@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.android.lopez.cookbook.Dialogs.IngredientDialog;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
@@ -53,11 +55,10 @@ public class NewRecipeActivity extends AppCompatActivity {
                 /*FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setTransition(transaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.add(android.R.id.content, dialog).addToBackStack(null).commit();*/
-
-
-
             }
         });
+
+
 
     }
 
@@ -67,6 +68,7 @@ public class NewRecipeActivity extends AppCompatActivity {
 
     public void setIngredient(IngredientObject newIngredient) {
         ingredientList.add(newIngredient);
+        Toast.makeText(getApplicationContext(), newIngredient.getMyName() + " has been added to this recipe. ID: " + newIngredient.getMyID(), Toast.LENGTH_LONG).show();
     }
 
 }

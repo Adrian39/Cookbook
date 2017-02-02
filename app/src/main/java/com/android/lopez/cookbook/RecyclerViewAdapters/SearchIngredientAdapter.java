@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.android.lopez.cookbook.Filters.IngredientFilter;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
+import com.android.lopez.cookbook.recipes.NewRecipeActivity;
+
 import java.util.ArrayList;
 
 
@@ -27,12 +29,14 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
     private ArrayList<IngredientObject> ingredientFilteredList = new ArrayList<>();
     private IngredientFilter filter;
     private Context mContext;
+    private NewRecipeActivity parentRecipeActivity;
 
 
-    public SearchIngredientAdapter(ArrayList<IngredientObject> ingredients, Context context){
+    public SearchIngredientAdapter(ArrayList<IngredientObject> ingredients, Context context, NewRecipeActivity recipeActivity){
         this.ingredientObjectList = ingredients;
         this.ingredientFilteredList = ingredients;
         this.mContext = context;
+        parentRecipeActivity = recipeActivity;
     }
 
     public void SetValues(ArrayList<IngredientObject> newIngredientValues){
@@ -48,6 +52,7 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.txtIngredientName.setText(ingredientObjectList.get(position).getMyName());
+        holder.selectedIngredient = ingredientObjectList.get(position);
 
     }
 
@@ -66,6 +71,7 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView txtIngredientName;
+        public IngredientObject selectedIngredient;
         public MyViewHolder(View view){
             super(view);
             txtIngredientName = (TextView) itemView.findViewById(R.id.txtRowIngredientName);
@@ -75,6 +81,7 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
         @Override
         public void onClick(View view) {
             Toast.makeText(mContext, "Added " + txtIngredientName.getText()+ " to the recipe", Toast.LENGTH_LONG).show();
+            parentRecipeActivity.setIngredient(selectedIngredient);
         }
     }
     

@@ -45,6 +45,7 @@ public class IngredientDialog extends DialogFragment {
     SearchView searchView;
     Toolbar toolbar;
     private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
+    private NewRecipeActivity currentRecipe = (NewRecipeActivity) getActivity();
 
 
     @Override
@@ -76,7 +77,7 @@ public class IngredientDialog extends DialogFragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         setIngredientData();
-        mAdapter = new SearchIngredientAdapter(ingredientList, context);
+        mAdapter = new SearchIngredientAdapter(ingredientList, context, currentRecipe);
         recyclerView.setAdapter(mAdapter);
 
         //ON QUERY LISTENER - LISTENER FOR THE SEARCH BAR
@@ -135,17 +136,21 @@ public class IngredientDialog extends DialogFragment {
 
     void addIngredientToDataBase(String ingredient){
 
+        //Add ingredient to database
         long newIngredientID;
         DBAdapter dbAdapter = new DBAdapter(context);
         newIngredientID = dbAdapter.insertIngredientData(ingredient);
+
+        //Not sure if it is necessary to clear list
         ingredientList.clear();
+
+        //Add ingredient to recipe list
         IngredientObject newIngredient = new IngredientObject();
         newIngredient.setMyName(ingredient);
         newIngredient.setMyID(newIngredientID);
-
-        NewRecipeActivity currentRecipe = (NewRecipeActivity) getActivity();
         currentRecipe.setIngredient(newIngredient);
 
+        //Close dialog after clicking button
         IngredientDialog.this.dismiss();
     }
 
