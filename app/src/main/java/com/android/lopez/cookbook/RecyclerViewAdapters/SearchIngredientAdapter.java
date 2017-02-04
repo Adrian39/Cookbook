@@ -36,7 +36,7 @@ public class SearchIngredientAdapter extends RecyclerView.Adapter<SearchIngredie
         this.ingredientObjectList = ingredients;
         this.ingredientFilteredList = ingredients;
         this.mContext = context;
-        parentRecipeActivity = recipeActivity;
+        this.parentRecipeActivity = recipeActivity;
     }
 
     public void SetValues(ArrayList<IngredientObject> newIngredientValues){

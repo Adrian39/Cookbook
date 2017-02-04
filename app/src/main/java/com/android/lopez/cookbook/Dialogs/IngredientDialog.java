@@ -45,7 +45,7 @@ public class IngredientDialog extends DialogFragment {
     SearchView searchView;
     Toolbar toolbar;
     private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
-    private NewRecipeActivity currentRecipe = (NewRecipeActivity) getActivity();
+    private NewRecipeActivity currentRecipe;
 
 
     @Override
@@ -152,6 +152,19 @@ public class IngredientDialog extends DialogFragment {
 
         //Close dialog after clicking button
         IngredientDialog.this.dismiss();
+    }
+
+    @Override
+    public void onAttach(Context context){
+        //NOTE: onAttach(Activity activity) has been deprecated since API 23.
+        super.onAttach(context);
+        currentRecipe = (NewRecipeActivity) getActivity();
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        currentRecipe = null;
     }
 
 }
