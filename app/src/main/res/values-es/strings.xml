@@ -6,4 +6,7 @@
     <string name="action_add">Agregar</string>
     <string name="title_add_ingredient">Agregar Ingrediente</string>
     <string name="hint_search">Buscar...</string>
+
+    <!--ACTIVITIES' NAMES-->
+    <string name="title_activity_new_recipe">New Recipe</string>
 </resources>
