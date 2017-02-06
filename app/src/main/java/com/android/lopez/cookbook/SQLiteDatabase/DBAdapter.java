@@ -130,6 +130,14 @@ public class DBAdapter {
         return cursor;
     }
 
+    public Cursor getAllRecipes(){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor;
+        String query = "SELECT * FROM" + DBHelper.TABLE_1_NAME;
+        cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
     static class DBHelper extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "cookbook";     //Database name

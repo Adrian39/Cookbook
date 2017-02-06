@@ -1,15 +1,12 @@
 package com.android.lopez.cookbook.Dialogs;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,11 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowId;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.android.lopez.cookbook.Filters.IngredientFilter;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.SearchIngredientAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
@@ -49,8 +43,11 @@ public class IngredientDialog extends DialogFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ingredient_dialog, container, false);
+
+        //CLOSE ON CLICK OUTSIDE
+        getDialog().setCanceledOnTouchOutside(true);
 
         //INITIATE UI VARIABLES
         btnAddIngredient = (Button) view.findViewById(R.id.btnAddIngredient);
@@ -69,6 +66,13 @@ public class IngredientDialog extends DialogFragment {
 
         //SET TOOLBAR'S TITLE
         toolbar.setTitle(getString(R.string.title_add_ingredient));
+        toolbar.setNavigationIcon(R.drawable.ic_clear_white_24px);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IngredientDialog.this.dismiss();
+            }
+        });
 
         //SET SEARCH VIEW'S ICON TO FALSE
         searchView.setIconified(false);
@@ -78,6 +82,7 @@ public class IngredientDialog extends DialogFragment {
         recyclerView.setLayoutManager(mLayoutManager);
         setIngredientData();
         mAdapter = new SearchIngredientAdapter(ingredientList, context, currentRecipe);
+        mAdapter.setParentDialog(IngredientDialog.this);
         recyclerView.setAdapter(mAdapter);
 
         //ON QUERY LISTENER - LISTENER FOR THE SEARCH BAR
@@ -90,11 +95,10 @@ public class IngredientDialog extends DialogFragment {
             @Override
             public boolean onQueryTextChange(String query) {
                 mAdapter.getFilter().filter(query);
-                if (mAdapter.getItemCount() < 1){
+                if (mAdapter.getItemCount() < 1) {
                     recyclerView.setVisibility(View.GONE);
                     btnAddIngredient.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     recyclerView.setVisibility(View.VISIBLE);
                     btnAddIngredient.setVisibility(View.GONE);
                 }
@@ -112,19 +116,13 @@ public class IngredientDialog extends DialogFragment {
         return dialog;
     }
 
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-        context = activity;
-    }
-
     //Function clears ingredient list and re-populates it with updated ingredient list.
-    public void setIngredientData(){
+    public void setIngredientData() {
         ingredientList.clear();
         DBAdapter dbAdapter = new DBAdapter(context);
         IngredientObject ingredient;
         Cursor cursor = dbAdapter.getAllIngredients();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
             String name = cursor.getString(1);
             ingredient = new IngredientObject();
@@ -134,7 +132,7 @@ public class IngredientDialog extends DialogFragment {
         }
     }
 
-    void addIngredientToDataBase(String ingredient){
+    void addIngredientToDataBase(String ingredient) {
 
         //Add ingredient to database
         long newIngredientID;
@@ -152,17 +150,25 @@ public class IngredientDialog extends DialogFragment {
 
         //Close dialog after clicking button
         IngredientDialog.this.dismiss();
+
+
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         //NOTE: onAttach(Activity activity) has been deprecated since API 23.
         super.onAttach(context);
         currentRecipe = (NewRecipeActivity) getActivity();
     }
 
     @Override
-    public void onDetach(){
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = activity;
+    }
+
+    @Override
+    public void onDetach() {
         super.onDetach();
         currentRecipe = null;
     }

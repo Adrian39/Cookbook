@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.lopez.cookbook.SQLiteDatabase.RecipeObject;
 
@@ -33,24 +34,31 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recipe_row_layout, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        holder.txtRecipeName.setText(mRecipeList.get(position).getMyName());
+        holder.txtServingSize.setText(mRecipeList.get(position).getMyServings());
+        holder.txtTime.setText(mRecipeList.get(position).getMyTime());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mRecipeList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        TextView txtRecipeName, txtServingSize, txtTime;
         public MyViewHolder(View itemView){
             super(itemView);
-
+            txtRecipeName = (TextView) itemView.findViewById(R.id.txtRecipeName);
+            txtServingSize = (TextView) itemView.findViewById(R.id.txtServings);
+            txtTime = (TextView) itemView.findViewById(R.id.txtTime);
         }
 
         @Override

@@ -2,7 +2,7 @@ package com.android.lopez.cookbook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,7 +26,6 @@ import com.android.lopez.cookbook.SQLiteDatabase.RecipeObject;
 import com.android.lopez.cookbook.recipes.NewRecipeActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyRecipesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -35,14 +34,20 @@ public class MyRecipesActivity extends AppCompatActivity
     private static SwipeRefreshLayout mRefreshLayout;
     private static CookbookViewAdapter mAdapter;
     private static ArrayList<RecipeObject> mRecipeList = new ArrayList<RecipeObject>();
-    private Context mContext;
+    private static Context mContext;
     private static Spinner mCategorySpinner;
 
-    public static void setData(ArrayList<RecipeObject> recipeList){
-        mRecipeList = recipeList;
+    public static void setRecipeData(){
+        mRecipeList.clear();
+        DBAdapter dbAdapter = new DBAdapter(mContext);
+        RecipeObject recipeObject;
+        Cursor cursor = dbAdapter.getAllRecipes();
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+        }
     }
 
-    public static ArrayList<RecipeObject> getData(){
+    public static ArrayList<RecipeObject> getRecipeData(){
         return mRecipeList;
     }
 
@@ -67,7 +72,7 @@ public class MyRecipesActivity extends AppCompatActivity
 
         //----RECYCLER VIEW----//
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerRecipes);
-        mAdapter = new CookbookViewAdapter(mContext, getData());
+        mAdapter = new CookbookViewAdapter(mContext, getRecipeData());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

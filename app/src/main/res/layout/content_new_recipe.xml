@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ImageView
@@ -26,56 +26,47 @@
                 android:contentDescription="Recipe Image"
                 android:src="@drawable/ic_meal"
                 android:tint="@color/colorWhite"
-                android:clickable="true"/>
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
+
+            <EditText
+
+                android:id="@+id/txtRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:fontFamily="sans-serif"
+                android:hint="Recipe Name"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin">
-
-                <EditText
-
-                    android:id="@+id/txtRecipeName"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_alignParentStart="true"
-                    android:fontFamily="sans-serif"
-                    android:hint="Recipe Name"
-                    android:inputType="textPersonName"
-                    android:textSize="16sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin">
 
                 <TextView
                     android:id="@+id/txtIngredients"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtRecipeName"
                     android:clickable="true"
                     android:ems="10"
                     android:fontFamily="sans-serif"
                     android:gravity="center_vertical"
                     android:text="@string/ingredients"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/txtRecipePreparation"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtIngredients"
-                    android:fontFamily="sans-serif"
-                    android:hint="Preparation"
-                    android:inputType="textMultiLine"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:background="?attr/selectableItemBackground"/>
 
                 <Button
                     android:id="@+id/btnAddIngredient"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_below="@+id/txtRecipeName"
                     android:layout_toEndOf="@+id/txtIngredients"
                     android:background="@color/colorWhite"
                     android:text="@string/action_add"
@@ -83,6 +74,27 @@
                     android:textSize="14dp" />
 
             </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/ingredientsInNewRecipe"
+                android:layout_below="@+id/txtRecipePreparation"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+            <EditText
+                android:id="@+id/txtRecipePreparation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/txtIngredients"
+                android:fontFamily="sans-serif"
+                android:hint="Preparation"
+                android:inputType="textMultiLine"
+                android:textSize="16sp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
 
         </LinearLayout>
