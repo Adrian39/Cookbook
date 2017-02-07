@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:id="@+id/txtIngredientName"
-        android:hint="@string/ingredients"
-        android:gravity="center_vertical|right"/>
+        android:hint="@string/hint_ingredients"
+        android:gravity="center_vertical|left"/>
 
     <ImageView
         android:id="@+id/icoDelete"

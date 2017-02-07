@@ -2,14 +2,26 @@
     <!--APP AND ACTIVITIES' NAMES-->
     <string name="app_name">Cookbook</string>
     <string name="title_activity_new_recipe">New Recipe</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!--MENUS-->
     <string name="action_settings">Settings</string>
 
-    <string name="ingredients">Ingredients</string>
+    <!--ACTIONS AND BUTTONS' DESCRIPTIONS-->
+    <string name="button_add_ingredient">Add Ingredients</string>
+    <string name="hint_ingredients">Ingredients</string>
     <string name="action_add">Add</string>
+
+
     <string name="title_add_ingredient">Add Ingredient</string>
+
+    <!--HINTS-->
     <string name="hint_search">Search...</string>
+    <string name="hint_preparation">Preparation</string>
+    <string name="hint_recipe_name">Recipe Name</string>
+
+    <!--IMAGE DESCRIPTIONS-->
+    <string name="description_recipe_image">Recipe Image</string>
+
 </resources>

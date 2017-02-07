@@ -42,13 +42,8 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.txtRecipeName.setText(mRecipeList.get(position).getMyName());
-        /**********************************************************************
-         *I get a weird error when i attempt to populate the following fields...
-         * maybe because it is setting the text from INT values... need to
-         * investigate more
-         * **********************************************************************/
-        //holder.txtServingSize.setText(mRecipeList.get(position).getMyServings());
-        //holder.txtTime.setText(mRecipeList.get(position).getMyTime());
+        holder.txtServingSize.setText("" + mRecipeList.get(position).getMyServings() + " Servings");
+        holder.txtTime.setText("" + mRecipeList.get(position).getMyTime() + " Minutes");
     }
 
     @Override

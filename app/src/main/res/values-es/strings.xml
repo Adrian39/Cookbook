@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--ACTIVITIES' NAMES-->
     <string name="app_name">Cookbook</string>
+    <string name="title_activity_new_recipe">New Recipe</string>
+
+    <!--MENUS-->
     <string name="action_settings">Ajustes</string>
-    <string name="ingredients">Ingredientes</string>
+
+    <!--ACTIONS AND BUTTONS' DESCRIPTIONS-->
+    <string name="button_add_ingredient">Add Ingredients</string>
     <string name="action_add">Agregar</string>
     <string name="title_add_ingredient">Agregar Ingrediente</string>
+
+    <!--HINTS-->
+    <string name="hint_ingredients">Ingredientes</string>
+    <string name="hint_preparation">Preparación</string>
+    <string name="hint_recipe_name">Nombre de la Receta</string>
     <string name="hint_search">Buscar...</string>
 
-    <!--ACTIVITIES' NAMES-->
-    <string name="title_activity_new_recipe">New Recipe</string>
+    <!--IMAGE DESCRIPTIONS-->
+    <string name="description_recipe_image">Foto de la Receta</string>
+
 </resources>
