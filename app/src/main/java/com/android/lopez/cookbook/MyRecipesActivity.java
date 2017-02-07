@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class MyRecipesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
-    
+
     private static RecyclerView mRecyclerView;
     private static SwipeRefreshLayout mRefreshLayout;
     private static CookbookViewAdapter mAdapter;
@@ -37,20 +37,29 @@ public class MyRecipesActivity extends AppCompatActivity
     private static Context mContext;
     private static Spinner mCategorySpinner;
 
-    public static void setRecipeData(){
+    public static void setRecipeData() {
         mRecipeList.clear();
         DBAdapter dbAdapter = new DBAdapter(mContext);
-        RecipeObject recipeObject;
+        RecipeObject newRecipe;
         Cursor cursor = dbAdapter.getAllRecipes();
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            int time = cursor.getInt(3);
+            int servings = cursor.getInt(5);
+            //ADD IMAGE FROM DB ONCE YOU FIGURE OUT HOW TO DO IT
+            newRecipe = new RecipeObject();
+            newRecipe.setMyID(id);
+            newRecipe.setMyName(name);
+            newRecipe.setMyTime(time);
+            newRecipe.setMyServings(servings);
+            mRecipeList.add(newRecipe);
         }
     }
 
-    public static ArrayList<RecipeObject> getRecipeData(){
+    public static ArrayList<RecipeObject> getRecipeData() {
         return mRecipeList;
     }
-
 
 
     @Override
@@ -72,6 +81,7 @@ public class MyRecipesActivity extends AppCompatActivity
 
         //----RECYCLER VIEW----//
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerRecipes);
+        setRecipeData();
         mAdapter = new CookbookViewAdapter(mContext, getRecipeData());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -164,9 +174,9 @@ public class MyRecipesActivity extends AppCompatActivity
         Toast.makeText(mContext, "You refreshed the view!", Toast.LENGTH_LONG).show();
     }
 
-    public void onFABClick(){
-        DBAdapter adapter = new DBAdapter(mContext);
-        adapter.openDB();
+    public void onFABClick() {
+        //DBAdapter adapter = new DBAdapter(mContext);
+        //adapter.openDB();
         Intent intent = new Intent(this, NewRecipeActivity.class);
         startActivity(intent);
     }

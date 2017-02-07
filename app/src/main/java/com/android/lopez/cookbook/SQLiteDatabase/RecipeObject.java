@@ -9,9 +9,9 @@ import java.util.List;
  * Created by JacoboAdrian on 4/17/2016.
  */
 public class RecipeObject {
-    private String myName, myCategory, myTime, myPreparation;
+    private String myName, myCategory, myPreparation;
     private long myID;
-    private int myServings;
+    private int myTime, myServings;
     private File myImageFile;
     private List<Integer> myAmounts;
     private List<IngredientObject> myIngredients;
@@ -40,11 +40,11 @@ public class RecipeObject {
         this.myCategory = myCategory;
     }
 
-    public String getMyTime() {
+    public int getMyTime() {
         return myTime;
     }
 
-    public void setMyTime(String myTime) {
+    public void setMyTime(int myTime) {
         this.myTime = myTime;
     }
 

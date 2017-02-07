@@ -14,13 +14,13 @@ import java.util.List;
 /**
  * Created by Adrian Lopez on 5/1/2016.
  */
-public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapter.MyViewHolder>{
+public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<RecipeObject> mRecipeList;
     private static LayoutInflater mInflater;
 
-    public CookbookViewAdapter(Context context, List<RecipeObject> recipeList){
+    public CookbookViewAdapter(Context context, List<RecipeObject> recipeList) {
 
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -28,7 +28,7 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
 
     }
 
-    public void udateRecipeList(List<RecipeObject> updatedRecipeList){
+    public void udateRecipeList(List<RecipeObject> updatedRecipeList) {
         mRecipeList = updatedRecipeList;
     }
 
@@ -42,8 +42,13 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.txtRecipeName.setText(mRecipeList.get(position).getMyName());
-        holder.txtServingSize.setText(mRecipeList.get(position).getMyServings());
-        holder.txtTime.setText(mRecipeList.get(position).getMyTime());
+        /**********************************************************************
+         *I get a weird error when i attempt to populate the following fields...
+         * maybe because it is setting the text from INT values... need to
+         * investigate more
+         * **********************************************************************/
+        //holder.txtServingSize.setText(mRecipeList.get(position).getMyServings());
+        //holder.txtTime.setText(mRecipeList.get(position).getMyTime());
     }
 
     @Override
@@ -51,10 +56,11 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
         return mRecipeList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtRecipeName, txtServingSize, txtTime;
-        public MyViewHolder(View itemView){
+
+        public MyViewHolder(View itemView) {
             super(itemView);
             txtRecipeName = (TextView) itemView.findViewById(R.id.txtRecipeName);
             txtServingSize = (TextView) itemView.findViewById(R.id.txtServings);
