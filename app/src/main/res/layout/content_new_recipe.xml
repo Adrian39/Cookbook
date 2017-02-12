@@ -43,7 +43,69 @@
                 android:inputType="textPersonName"
                 android:textSize="16sp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/txtPreparationTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="@string/display_preparation_time"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/btnSetTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/colorWhite"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/button_set_time"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorAccent"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtNumberOfServings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:text="@string/display_servings"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/btnSetServings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/colorWhite"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/button_set_servings"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorAccent"/>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -68,16 +130,16 @@
                     android:id="@+id/btnAddIngredient"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:background="@color/colorAccent"
-                    android:text="@string/button_add_ingredient"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorWhite"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true" />
+                    android:text="@string/button_add_ingredient"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

@@ -8,7 +8,9 @@
     <string name="action_settings">Ajustes</string>
 
     <!--ACTIONS AND BUTTONS' DESCRIPTIONS-->
-    <string name="button_add_ingredient">Add Ingredients</string>
+    <string name="button_add_ingredient">Agregar Ingredientes</string>
+    <string name="button_set_time">Fijar tiempo</string>
+    <string name="button_set_servings">Fijar porciones</string>
     <string name="action_add">Agregar</string>
     <string name="title_add_ingredient">Agregar Ingrediente</string>
 
@@ -20,5 +22,14 @@
 
     <!--IMAGE DESCRIPTIONS-->
     <string name="description_recipe_image">Foto de la Receta</string>
+
+    <!--INFO DISPLAY-->
+    <string name="display_preparation_time">Tiempo de preparacion:</string>
+    <string name="display_servings">Porciones:</string>
+
+    <!--TIME MEASUREMENTS-->
+    <string name="time_hours">Horas</string>
+    <string name="time_minutes">Minutos</string>
+    <string name="time_seconds">Segundos</string>
 
 </resources>

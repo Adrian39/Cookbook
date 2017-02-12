@@ -10,6 +10,8 @@
 
     <!--ACTIONS AND BUTTONS' DESCRIPTIONS-->
     <string name="button_add_ingredient">Add Ingredients</string>
+    <string name="button_set_time">Set time</string>
+    <string name="button_set_servings">Set servings</string>
     <string name="hint_ingredients">Ingredients</string>
     <string name="action_add">Add</string>
 
@@ -23,5 +25,14 @@
 
     <!--IMAGE DESCRIPTIONS-->
     <string name="description_recipe_image">Recipe Image</string>
+
+    <!--INFO DISPLAY-->
+    <string name="display_preparation_time">Preparation time:</string>
+    <string name="display_servings">Servings:</string>
+
+    <!--TIME MEASUREMENTS-->
+    <string name="time_hours">Hours</string>
+    <string name="time_minutes">Minutes</string>
+    <string name="time_seconds">Seconds</string>
 
 </resources>
