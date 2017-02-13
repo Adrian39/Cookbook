@@ -67,7 +67,7 @@ public class IngredientEditorAdapter
         mIngredientList = newIngredientList;
     }
 
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         mIngredientList.remove(position);
         notifyItemRemoved(position);
     }

@@ -20,9 +20,9 @@ public class DBAdapter {
     DBHelper dbHelper;
     private Context context;
 
-    public void openDB(){
+    public void openDB() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if(db.isOpen()){
+        if (db.isOpen()) {
             Toast.makeText(context, "Successfully opened database", Toast.LENGTH_LONG).show();
         }
     }
@@ -41,6 +41,25 @@ public class DBAdapter {
             ContentValues contentValues = new ContentValues();
             contentValues.put(DBHelper.T1_NAME, name);
             contentValues.put(DBHelper.T1_CATEGORY, category);
+            contentValues.put(DBHelper.T1_TIME, time);
+            contentValues.put(DBHelper.T1_PREPARATION, preparation);
+            contentValues.put(DBHelper.T1_SERVINGS, servings);
+            newRecipeID = db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
+            return newRecipeID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newRecipeID;
+    }
+
+    public long insertRecipeData(String name,  int time, String preparation, int servings) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRecipeID = 0;
+
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.T1_NAME, name);
             contentValues.put(DBHelper.T1_TIME, time);
             contentValues.put(DBHelper.T1_PREPARATION, preparation);
             contentValues.put(DBHelper.T1_SERVINGS, servings);
@@ -71,24 +90,43 @@ public class DBAdapter {
         return newIngredientID;
     }
 
-    public long insertIngredientData(String name){
+    public long insertIngredientData(String name) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newIngredientID = 0;
 
-        try{
+        try {
             ContentValues newIngredient = new ContentValues();
             newIngredient.put(DBHelper.T2_NAME, name);
             newIngredientID = db.insert(DBHelper.TABLE_2_NAME, null, newIngredient);
             Toast.makeText(context, "Added " + name + " to database. ID: " + newIngredientID, Toast.LENGTH_LONG).show();
             return newIngredientID;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             Toast.makeText(context, "Could not add " + name + " to the database.", Toast.LENGTH_LONG).show();
         }
         return newIngredientID;
     }
 
-    public boolean insertRecIngData(int ingredientID, int recipeID, int amountNeeded) {
+    public long insertRecIngData(long ingredientID, long recipeID) {
+
+        long relationshipID = 0;
+
+        try {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.T3_FK_INGREDIENT, ingredientID);
+            contentValues.put(DBHelper.T3_FK_RECIPE, recipeID);
+            relationshipID = db.insert(DBHelper.TABLE_3_NAME, null, contentValues);
+            return relationshipID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return relationshipID;
+    }
+
+    public long insertRecIngData(int ingredientID, int recipeID, int amountNeeded) {
+
+        long relationshipID = 0;
 
         try {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -96,12 +134,12 @@ public class DBAdapter {
             contentValues.put(DBHelper.T3_FK_INGREDIENT, ingredientID);
             contentValues.put(DBHelper.T3_FK_RECIPE, recipeID);
             contentValues.put(DBHelper.T3_QUANTITY, amountNeeded);
-            db.insert(DBHelper.TABLE_3_NAME, null, contentValues);
-            return true;
+            relationshipID = db.insert(DBHelper.TABLE_3_NAME, null, contentValues);
+            return relationshipID;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return relationshipID;
     }
 
     //SEARCH AND FILTERS
@@ -130,7 +168,7 @@ public class DBAdapter {
         return cursor;
     }
 
-    public Cursor getAllRecipes(){
+    public Cursor getAllRecipes() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor;
         String query = "SELECT * FROM " + DBHelper.TABLE_1_NAME;

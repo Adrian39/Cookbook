@@ -70,11 +70,12 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="@string/button_set_time"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
+            <!--SERVINGS-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -83,7 +84,7 @@
                     android:id="@+id/txtNumberOfServings"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="16dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
@@ -94,17 +95,27 @@
                     android:id="@+id/btnSetServings"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
+                    android:layout_alignBaseline="@+id/txtNumberOfServings"
+                    android:layout_alignBottom="@+id/txtNumberOfServings"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:background="@color/colorWhite"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:text="@string/button_set_servings"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorAccent"/>
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
 
+                <SeekBar
+                    android:id="@+id/seekBarServings"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_below="@+id/txtNumberOfServings"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:max="15"
+                    android:progress="1" />
             </RelativeLayout>
 
             <RelativeLayout

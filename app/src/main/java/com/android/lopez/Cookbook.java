@@ -11,7 +11,7 @@ public class Cookbook extends Application {
     private DBAdapter dbAdapter;
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.openDB();
     }

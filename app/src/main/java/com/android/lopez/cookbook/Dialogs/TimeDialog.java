@@ -27,7 +27,7 @@ public class TimeDialog extends DialogFragment implements TimePickerDialog.OnTim
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        int timeInMinutes = 0;
+        int timeInMinutes;
         Toast.makeText(getContext(),
                 "Hours: " + hourOfDay + " Minutes: " + minute + " Time will be set in minutes to recipe"
                 , Toast.LENGTH_LONG).show();
@@ -36,7 +36,7 @@ public class TimeDialog extends DialogFragment implements TimePickerDialog.OnTim
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
         currentRecipe = (NewRecipeActivity) getActivity();
     }

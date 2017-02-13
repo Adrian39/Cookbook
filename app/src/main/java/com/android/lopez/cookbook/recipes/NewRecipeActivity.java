@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,19 +25,27 @@ import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.IngredientEditorAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class NewRecipeActivity extends AppCompatActivity {
-    Button btnAddIngredient;
-    TextView txtIngredientTitle;
+    private Button btnAddIngredient;
+    private TextView txtIngredientTitle;
     private ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     private RecyclerView ingredientRecyclerView;
     private RecyclerView.LayoutManager myLayoutManager;
     private IngredientEditorAdapter myAdapter;
     private Context context;
     private Button btnSetTime;
+    private Button btnSetServings;
     private TextView txtDisplayTime;
+    private TextView txtDisplayServings;
+    private TextView txtRecipeName;
+    private String recipeName = "";
     private int preparationTime = 0;
+    private int servingsNumber = 0;
+    private SeekBar servingsSeekBar;
 
 
     @Override
@@ -46,6 +55,10 @@ public class NewRecipeActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         txtDisplayTime = (TextView) findViewById(R.id.txtPreparationTime);
+        txtDisplayServings = (TextView) findViewById(R.id.txtNumberOfServings);
+        txtRecipeName = (TextView) findViewById(R.id.txtRecipeName);
+        servingsSeekBar = (SeekBar) findViewById(R.id.seekBarServings);
+        servingsSeekBar.setVisibility(View.GONE);
 
         //INITIALIZE TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -56,6 +69,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                recipeName = (String) txtRecipeName.getText();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -108,6 +122,35 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         });
 
+        //SET LISTENER FOR SET_SERVINGS BUTTON
+        btnSetServings = (Button) findViewById(R.id.btnSetServings);
+        btnSetServings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                servingsSeekBar.setVisibility(servingsSeekBar.isShown()
+                        ? View.GONE
+                        : View.VISIBLE);
+            }
+        });
+
+        //SET LISTENER FOR SERVINGS SEEK BAR
+        servingsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                servingsNumber = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                txtDisplayServings.setText(getText(R.string.display_servings) + " " + servingsNumber);
+            }
+        });
+
         //SET LISTENER FOR SET_TIME BUTTON
         btnSetTime = (Button) findViewById(R.id.btnSetTime);
         btnSetTime.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +180,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
-    public void setPreparationTime(int timeInMinutes){
+    public void setPreparationTime(int timeInMinutes) {
         preparationTime = timeInMinutes;
         txtDisplayTime.setText(getString(R.string.display_preparation_time)
                 + " " + timeInMinutes
