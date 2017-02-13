@@ -1,5 +1,6 @@
 package com.android.lopez.cookbook.recipes;
 
+import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.lopez.cookbook.Dialogs.IngredientDialog;
+import com.android.lopez.cookbook.Dialogs.TimeDialog;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.IngredientEditorAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
@@ -32,6 +34,9 @@ public class NewRecipeActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager myLayoutManager;
     private IngredientEditorAdapter myAdapter;
     private Context context;
+    private Button btnSetTime;
+    private TextView txtDisplayTime;
+    private int preparationTime = 0;
 
 
     @Override
@@ -39,6 +44,8 @@ public class NewRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_recipe);
         context = getApplicationContext();
+
+        txtDisplayTime = (TextView) findViewById(R.id.txtPreparationTime);
 
         //INITIALIZE TOOLBAR
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -101,6 +108,16 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         });
 
+        //SET LISTENER FOR SET_TIME BUTTON
+        btnSetTime = (Button) findViewById(R.id.btnSetTime);
+        btnSetTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment setTimeFragment = new TimeDialog();
+                setTimeFragment.show(getFragmentManager(), "TimePicker");
+            }
+        });
+
     }
 
     public ArrayList<IngredientObject> getIngredientList() {
@@ -120,4 +137,10 @@ public class NewRecipeActivity extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
+    public void setPreparationTime(int timeInMinutes){
+        preparationTime = timeInMinutes;
+        txtDisplayTime.setText(getString(R.string.display_preparation_time)
+                + " " + timeInMinutes
+                + " " + getString(R.string.time_minutes_abbreviation));
+    }
 }

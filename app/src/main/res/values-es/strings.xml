@@ -31,5 +31,6 @@
     <string name="time_hours">Horas</string>
     <string name="time_minutes">Minutos</string>
     <string name="time_seconds">Segundos</string>
+    <string name="time_minutes_abbreviation">min.</string>
 
 </resources>

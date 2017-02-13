@@ -31,13 +31,13 @@ import java.util.ArrayList;
 
 public class IngredientDialog extends DialogFragment {
 
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
-    Context context;
-    Button btnAddIngredient;
-    SearchIngredientAdapter mAdapter;
-    SearchView searchView;
-    Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private Context context;
+    private Button btnAddIngredient;
+    private SearchIngredientAdapter mAdapter;
+    private SearchView searchView;
+    private Toolbar toolbar;
     private static ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     private NewRecipeActivity currentRecipe;
 
