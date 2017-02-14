@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.android.lopez.cookbook.Dialogs.IngredientDialog;
 import com.android.lopez.cookbook.Dialogs.TimeDialog;
 import com.android.lopez.cookbook.R;
 import com.android.lopez.cookbook.RecyclerViewAdapters.IngredientEditorAdapter;
+import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
 
 import org.w3c.dom.Text;
@@ -30,21 +32,28 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class NewRecipeActivity extends AppCompatActivity {
+    //DECLARE VARIABLES
     private Button btnAddIngredient;
+    private Button btnSetTime;
+    private Button btnSetServings;
     private TextView txtIngredientTitle;
+    private TextView txtDisplayTime;
+    private TextView txtDisplayServings;
+    private TextView txtRecipeName;
+    private TextView txtPreparation;
+    private ImageView icoCamera;
+    private ImageView icoGallery;
+    private ImageView imgRecipePhoto;
     private ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     private RecyclerView ingredientRecyclerView;
     private RecyclerView.LayoutManager myLayoutManager;
     private IngredientEditorAdapter myAdapter;
     private Context context;
-    private Button btnSetTime;
-    private Button btnSetServings;
-    private TextView txtDisplayTime;
-    private TextView txtDisplayServings;
-    private TextView txtRecipeName;
     private String recipeName = "";
+    private String recipePreparation = "";
     private int preparationTime = 0;
     private int servingsNumber = 0;
+    private long recipeID;
     private SeekBar servingsSeekBar;
 
 
@@ -54,9 +63,13 @@ public class NewRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_recipe);
         context = getApplicationContext();
 
+        //INITIALIZE TEXT VIEWS
         txtDisplayTime = (TextView) findViewById(R.id.txtPreparationTime);
         txtDisplayServings = (TextView) findViewById(R.id.txtNumberOfServings);
         txtRecipeName = (TextView) findViewById(R.id.txtRecipeName);
+        txtPreparation = (TextView) findViewById(R.id.txtRecipePreparation);
+
+        //INITIALIZE SEEK BAR
         servingsSeekBar = (SeekBar) findViewById(R.id.seekBarServings);
         servingsSeekBar.setVisibility(View.GONE);
 
@@ -69,11 +82,31 @@ public class NewRecipeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recipeName = (String) txtRecipeName.getText();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                recipeName = txtRecipeName.getText().toString();
+                recipePreparation = txtPreparation.getText().toString();
+                DBAdapter dbAdapter = new DBAdapter(context);
+
+                //ADD RECIPE TO RECIPE DATABASE
+                recipeID = dbAdapter.insertRecipeData(recipeName, preparationTime,
+                        recipePreparation, servingsNumber);
+
+                //ADD INGREDIENTS AND RECIPE TO RELATIONAL DATABASE TABLE
+                IngredientObject currentIngredient;
+                for (int i = 0; i < ingredientList.size(); i++) {
+                    currentIngredient = ingredientList.get(i);
+                    dbAdapter.insertRecIngData(currentIngredient.getMyID(), recipeID);
+                    /*Toast.makeText(context, "Added the following ingredient: "
+                            + ingredientList.get(i).getMyName()
+                            + " ID: " + ingredientList.get(i).getMyID(),
+                            Toast.LENGTH_SHORT).show();*/
+                }
+
+                Snackbar.make(view, "Recipe has been added to the database", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                NewRecipeActivity.this.finish();
             }
         });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //ADD BUTTON AND SET LISTENER
@@ -161,6 +194,25 @@ public class NewRecipeActivity extends AppCompatActivity {
             }
         });
 
+        //SET LISTENER FOR CAMERA BUTTON
+        icoCamera = (ImageView) findViewById(R.id.icoCamera);
+        icoCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //CAMERA ACTIVITY
+            }
+        });
+
+
+        //SET LISTENER FOR GALLERY PHOTO
+        icoGallery = (ImageView) findViewById(R.id.icoGallery);
+        icoGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
 
     public ArrayList<IngredientObject> getIngredientList() {
@@ -180,6 +232,7 @@ public class NewRecipeActivity extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
+    //SET PREPARATION TIME TO MINUTES AND SAVES IT TO NEW RECIPE OBJECT
     public void setPreparationTime(int timeInMinutes) {
         preparationTime = timeInMinutes;
         txtDisplayTime.setText(getString(R.string.display_preparation_time)

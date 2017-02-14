@@ -47,7 +47,9 @@ public class MyRecipesActivity extends AppCompatActivity
             String name = cursor.getString(1);
             int time = cursor.getInt(3);
             int servings = cursor.getInt(5);
+
             //ADD IMAGE FROM DB ONCE YOU FIGURE OUT HOW TO DO IT
+
             newRecipe = new RecipeObject();
             newRecipe.setMyID(id);
             newRecipe.setMyName(name);
@@ -179,6 +181,14 @@ public class MyRecipesActivity extends AppCompatActivity
         //adapter.openDB();
         Intent intent = new Intent(this, NewRecipeActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        setRecipeData();
+        mAdapter.udateRecipeList(mRecipeList);
+        mAdapter.notifyDataSetChanged();
     }
 
 }
