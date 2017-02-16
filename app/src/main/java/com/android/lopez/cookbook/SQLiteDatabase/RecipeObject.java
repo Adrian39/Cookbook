@@ -9,10 +9,12 @@ import java.util.List;
  * Created by JacoboAdrian on 4/17/2016.
  */
 public class RecipeObject {
-    private String myName, myCategory, myPreparation;
+    private String myName;
+    private String myCategory;
+    private String myPreparation;
+    private String myImageUri;
     private long myID;
     private int myTime, myServings;
-    private File myImageFile;
     private List<Integer> myAmounts;
     private List<IngredientObject> myIngredients;
 
@@ -40,6 +42,14 @@ public class RecipeObject {
         this.myCategory = myCategory;
     }
 
+    public String getMyImageUri() {
+        return myImageUri;
+    }
+
+    public void setMyImageUri(String myImageUri) {
+        this.myImageUri = myImageUri;
+    }
+
     public int getMyTime() {
         return myTime;
     }
@@ -62,14 +72,6 @@ public class RecipeObject {
 
     public void setMyServings(int myServings) {
         this.myServings = myServings;
-    }
-
-    public File getMyImageFile() {
-        return myImageFile;
-    }
-
-    public void setMyImageFile(File myImageFile) {
-        this.myImageFile = myImageFile;
     }
 
     public List<Integer> getMyAmounts() {

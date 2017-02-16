@@ -3,7 +3,15 @@ package com.android.lopez.cookbook.recipes;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.app.FragmentManager;
@@ -29,13 +37,15 @@ import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
+
+import static android.content.res.ColorStateList.valueOf;
 
 public class NewRecipeActivity extends AppCompatActivity {
     //DECLARE VARIABLES
-    private Button btnAddIngredient;
-    private Button btnSetTime;
-    private Button btnSetServings;
+    private Button btnAddIngredient, btnSetTime, btnSetServings;
     private TextView txtIngredientTitle;
     private TextView txtDisplayTime;
     private TextView txtDisplayServings;
@@ -51,8 +61,10 @@ public class NewRecipeActivity extends AppCompatActivity {
     private Context context;
     private String recipeName = "";
     private String recipePreparation = "";
+    private String imageURI;
     private int preparationTime = 0;
     private int servingsNumber = 0;
+    private static final int RESULT_LOAD_IMAGE = 1;
     private long recipeID;
     private SeekBar servingsSeekBar;
 
@@ -68,6 +80,9 @@ public class NewRecipeActivity extends AppCompatActivity {
         txtDisplayServings = (TextView) findViewById(R.id.txtNumberOfServings);
         txtRecipeName = (TextView) findViewById(R.id.txtRecipeName);
         txtPreparation = (TextView) findViewById(R.id.txtRecipePreparation);
+
+        //INITIALIZE IMAGE VIEW
+        imgRecipePhoto = (ImageView) findViewById(R.id.imgRecipePhoto);
 
         //INITIALIZE SEEK BAR
         servingsSeekBar = (SeekBar) findViewById(R.id.seekBarServings);
@@ -87,18 +102,21 @@ public class NewRecipeActivity extends AppCompatActivity {
                 DBAdapter dbAdapter = new DBAdapter(context);
 
                 //ADD RECIPE TO RECIPE DATABASE
-                recipeID = dbAdapter.insertRecipeData(recipeName, preparationTime,
-                        recipePreparation, servingsNumber);
+                if (imageURI == "" || imageURI == null){
+                    recipeID = dbAdapter.insertRecipeData(recipeName, preparationTime,
+                            recipePreparation, servingsNumber);
+                }
+                else{
+                    recipeID = dbAdapter.insertRecipeData(recipeName, preparationTime,
+                            recipePreparation, servingsNumber, imageURI);
+                    Toast.makeText(context, "Added URI: " + imageURI, Toast.LENGTH_SHORT).show();
+                }
 
                 //ADD INGREDIENTS AND RECIPE TO RELATIONAL DATABASE TABLE
                 IngredientObject currentIngredient;
                 for (int i = 0; i < ingredientList.size(); i++) {
                     currentIngredient = ingredientList.get(i);
                     dbAdapter.insertRecIngData(currentIngredient.getMyID(), recipeID);
-                    /*Toast.makeText(context, "Added the following ingredient: "
-                            + ingredientList.get(i).getMyName()
-                            + " ID: " + ingredientList.get(i).getMyID(),
-                            Toast.LENGTH_SHORT).show();*/
                 }
 
                 Snackbar.make(view, "Recipe has been added to the database", Snackbar.LENGTH_LONG)
@@ -200,6 +218,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CAMERA ACTIVITY
+
             }
         });
 
@@ -209,10 +228,61 @@ public class NewRecipeActivity extends AppCompatActivity {
         icoGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //THIS WORKS
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data){
+
+            Uri selectedImage = data.getData();
+
+            imageURI = selectedImage.toString();
+            //imgRecipePhoto.setImageURI(Uri.parse(imageURI));
+            imgRecipePhoto.setImageURI(selectedImage);
+            imgRecipePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
+        }
+
+        /*if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null !=data){
+            Uri selectedImageUri = data.getData();
+            String[] projection = {MediaStore.Images.Media.DATA};
+            @SuppressWarnings("deprecation")
+            Cursor cursor = getContentResolver().query(selectedImageUri, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int column_index = cursor.getColumnIndex(projection[0]);
+            imagePath = cursor.getString(column_index);
+            cursor.close();
+
+            Toast.makeText(context, imagePath, Toast.LENGTH_SHORT).show();
+            //imgRecipePhoto.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+
+            imageFile = new File(imagePath);
+
+            if (imageFile.exists()){
+
+                Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                imgRecipePhoto.setImageBitmap(imageBitmap);
+                //
+            }
+            else{
+                Toast.makeText(context, "Image could not be loaded", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(context, "You have not selected and image", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     public ArrayList<IngredientObject> getIngredientList() {

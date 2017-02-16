@@ -15,8 +15,7 @@
             android:layout_width="180dp"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
-            android:src="@drawable/ic_meal"
-            android:tint="@color/colorWhite" />
+            android:src="@drawable/ic_meal"/>
 
         <TextView
             android:id="@+id/txtRecipeName"

@@ -1,10 +1,12 @@
 package com.android.lopez.cookbook;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.lopez.cookbook.SQLiteDatabase.RecipeObject;
@@ -44,6 +46,12 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
         holder.txtRecipeName.setText(mRecipeList.get(position).getMyName());
         holder.txtServingSize.setText("" + mRecipeList.get(position).getMyServings() + " Servings");
         holder.txtTime.setText("" + mRecipeList.get(position).getMyTime() + " Minutes");
+        String imageUri = mRecipeList.get(position).getMyImageUri();
+        if (imageUri != null){
+            holder.imgRecipeImage.setImageURI(Uri.parse(imageUri));
+            holder.imgRecipeImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        }
+
     }
 
     @Override
@@ -54,12 +62,14 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtRecipeName, txtServingSize, txtTime;
+        ImageView imgRecipeImage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             txtRecipeName = (TextView) itemView.findViewById(R.id.txtRecipeName);
             txtServingSize = (TextView) itemView.findViewById(R.id.txtServings);
             txtTime = (TextView) itemView.findViewById(R.id.txtTime);
+            imgRecipeImage = (ImageView) itemView.findViewById(R.id.recipeImage);
         }
 
         @Override

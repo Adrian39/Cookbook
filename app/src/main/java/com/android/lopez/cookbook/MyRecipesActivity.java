@@ -47,6 +47,7 @@ public class MyRecipesActivity extends AppCompatActivity
             String name = cursor.getString(1);
             int time = cursor.getInt(3);
             int servings = cursor.getInt(5);
+            String imageURI = cursor.getString(6);
 
             //ADD IMAGE FROM DB ONCE YOU FIGURE OUT HOW TO DO IT
 
@@ -55,6 +56,7 @@ public class MyRecipesActivity extends AppCompatActivity
             newRecipe.setMyName(name);
             newRecipe.setMyTime(time);
             newRecipe.setMyServings(servings);
+            newRecipe.setMyImageUri(imageURI);
             mRecipeList.add(newRecipe);
         }
     }
