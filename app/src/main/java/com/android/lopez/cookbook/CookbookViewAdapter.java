@@ -1,6 +1,8 @@
 package com.android.lopez.cookbook;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,9 +48,14 @@ public class CookbookViewAdapter extends RecyclerView.Adapter<CookbookViewAdapte
         holder.txtRecipeName.setText(mRecipeList.get(position).getMyName());
         holder.txtServingSize.setText("" + mRecipeList.get(position).getMyServings() + " Servings");
         holder.txtTime.setText("" + mRecipeList.get(position).getMyTime() + " Minutes");
-        String imageUri = mRecipeList.get(position).getMyImageUri();
-        if (imageUri != null){
-            holder.imgRecipeImage.setImageURI(Uri.parse(imageUri));
+
+
+        if (mRecipeList.get(position).getMyImageByteArray() != null){
+            //From byte[]
+            Bitmap image = Utility.getPhoto(mRecipeList.get(position).getMyImageByteArray());
+            //From Base64
+            //Bitmap image = Utility.decodeBase64(mRecipeList.get(position).getMyImageString());
+            holder.imgRecipeImage.setImageBitmap(image);
             holder.imgRecipeImage.setScaleType(ImageView.ScaleType.FIT_XY);
         }
 

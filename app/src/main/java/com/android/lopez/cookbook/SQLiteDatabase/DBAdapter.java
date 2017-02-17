@@ -71,7 +71,7 @@ public class DBAdapter {
         return newRecipeID;
     }
 
-    public long insertRecipeData(String name,  int time, String preparation, int servings, String imageURI) {
+    public long insertRecipeData(String name,  int time, String preparation, int servings, byte[] imageByte) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long newRecipeID = 0;
@@ -82,7 +82,27 @@ public class DBAdapter {
             contentValues.put(DBHelper.T1_TIME, time);
             contentValues.put(DBHelper.T1_PREPARATION, preparation);
             contentValues.put(DBHelper.T1_SERVINGS, servings);
-            contentValues.put(DBHelper.T1_IMAGE_FILE, imageURI);
+            contentValues.put(DBHelper.T1_IMAGE_FILE, imageByte);
+            newRecipeID = db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
+            return newRecipeID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newRecipeID;
+    }
+
+    public long insertRecipeData(String name,  int time, String preparation, int servings, String image64) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long newRecipeID = 0;
+
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DBHelper.T1_NAME, name);
+            contentValues.put(DBHelper.T1_TIME, time);
+            contentValues.put(DBHelper.T1_PREPARATION, preparation);
+            contentValues.put(DBHelper.T1_SERVINGS, servings);
+            contentValues.put(DBHelper.T1_IMAGE_FILE, image64);
             newRecipeID = db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
             return newRecipeID;
         } catch (SQLException e) {
@@ -199,17 +219,28 @@ public class DBAdapter {
     static class DBHelper extends SQLiteOpenHelper {
 
         private static final String DB_NAME = "cookbook";     //Database name
-        private static final int SCHEME_VERSION = 11;
+        private static final int SCHEME_VERSION = 13;
 
-        private static final String TABLE_1_NAME = "Recipes", T1_KEY_ID = "_id", T1_NAME = "Name",
-                T1_CATEGORY = "Category", T1_TIME = "Time", T1_PREPARATION = "Preparation",
-                T1_SERVINGS = "Servings", T1_IMAGE_FILE = "ImageFile";      //Table 1 = Recipe Database
+        private static final String TABLE_1_NAME = "Recipes",   //Table 1 = Recipe Database
+                T1_KEY_ID = "_id",
+                T1_NAME = "Name",
+                T1_CATEGORY = "Category",
+                T1_TIME = "Time",
+                T1_PREPARATION = "Preparation",
+                T1_SERVINGS = "Servings",
+                T1_IMAGE_FILE = "ImageFile";
 
-        private static final String TABLE_2_NAME = "Ingredients", T2_KEY_ID = "_id", T2_NAME = "Name",
-                T2_CATEGORY = "Category", T2_IN_STOCK = "InStock", T2_NEEDED = "Needed";                    //Table 2 = Ingredient Database
+        private static final String TABLE_2_NAME = "Ingredients",   //Table 2 = Ingredient Database
+                T2_KEY_ID = "_id",
+                T2_NAME = "Name",
+                T2_CATEGORY = "Category",
+                T2_IN_STOCK = "InStock",
+                T2_NEEDED = "Needed";
 
-        private static final String TABLE_3_NAME = "RecipeIngredient", T3_FK_RECIPE = "RecipeID",
-                T3_FK_INGREDIENT = "IngredientID", T3_QUANTITY = "Quantity";                                //Table 3 = RecipeIngredientLink Database
+        private static final String TABLE_3_NAME = "RecipeIngredient",  //Table 3 = RecipeIngredientLink Database
+                T3_FK_RECIPE = "RecipeID",
+                T3_FK_INGREDIENT = "IngredientID",
+                T3_QUANTITY = "Quantity";
 
         private Context context;
 
@@ -230,7 +261,7 @@ public class DBAdapter {
                         T1_TIME + " INTEGER, " +
                         T1_PREPARATION + " TEXT, " +
                         T1_SERVINGS + " INTEGER, " +
-                        T1_IMAGE_FILE + " VARCHAR(250));");
+                        T1_IMAGE_FILE + " BLOB);");
                 Toast.makeText(context, "Successfully opened database", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 Toast.makeText(context, "An error has occurred when attempting to create the 'Recipes Table'", Toast.LENGTH_SHORT).show();
@@ -258,7 +289,7 @@ public class DBAdapter {
                 Toast.makeText(context, "An error has occurred when attempting to create the 'Link Table'", Toast.LENGTH_SHORT).show();
             }
 
-            try {
+            /*try {
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(DBHelper.T1_NAME, "Test");
                 contentValues.put(DBHelper.T1_CATEGORY, "Test");
@@ -316,7 +347,7 @@ public class DBAdapter {
                 Toast.makeText(context, "Successfully third test ingredient", Toast.LENGTH_SHORT).show();
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
 
         @Override

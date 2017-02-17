@@ -12,11 +12,20 @@ public class RecipeObject {
     private String myName;
     private String myCategory;
     private String myPreparation;
-    private String myImageUri;
+    private String myImageString;
     private long myID;
     private int myTime, myServings;
     private List<Integer> myAmounts;
     private List<IngredientObject> myIngredients;
+    private byte[] myImageByteArray;
+
+    public byte[] getMyImageByteArray() {
+        return myImageByteArray;
+    }
+
+    public void setMyImageByteArray(byte[] myImageByteArray) {
+        this.myImageByteArray = myImageByteArray;
+    }
 
     public long getMyID() {
         return myID;
@@ -42,12 +51,12 @@ public class RecipeObject {
         this.myCategory = myCategory;
     }
 
-    public String getMyImageUri() {
-        return myImageUri;
+    public String getMyImageString() {
+        return myImageString;
     }
 
-    public void setMyImageUri(String myImageUri) {
-        this.myImageUri = myImageUri;
+    public void setMyImageString(String myImageString) {
+        this.myImageString = myImageString;
     }
 
     public int getMyTime() {
