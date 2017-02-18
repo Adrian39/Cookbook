@@ -40,31 +40,22 @@ import java.util.ArrayList;
 public class NewRecipeActivity extends AppCompatActivity {
     //DECLARE VARIABLES
     private Button btnAddIngredient, btnSetTime, btnSetServings;
-    private TextView txtIngredientTitle;
-    private TextView txtDisplayTime;
-    private TextView txtDisplayServings;
-    private TextView txtRecipeName;
-    private TextView txtPreparation;
-    private ImageView icoCamera;
-    private ImageView icoGallery;
-    private ImageView imgRecipePhoto;
+    private TextView txtIngredientTitle, txtDisplayTime, txtDisplayServings,
+            txtRecipeName, txtPreparation;
+    private ImageView icoCamera, icoGallery, imgRecipePhoto;
     private ArrayList<IngredientObject> ingredientList = new ArrayList<IngredientObject>();
     private RecyclerView ingredientRecyclerView;
     private RecyclerView.LayoutManager myLayoutManager;
     private IngredientEditorAdapter myAdapter;
     private Context context;
-    private String recipeName = "";
-    private String recipePreparation = "";
-    //private String encodeImage64;
-    private String imageURI;
+    private String recipeName = "", recipePreparation = "", imageURI;
     private Bitmap imageBitmap;
     private byte[] imageByteArray;
-    private int preparationTime = 0;
-    private int servingsNumber = 0;
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private int preparationTime = 0, servingsNumber = 0;
+    private static final int RESULT_LOAD_IMAGE = 1,
+            CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private long recipeID;
     private SeekBar servingsSeekBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,7 +201,8 @@ public class NewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CAMERA ACTIVITY
-
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -233,9 +225,38 @@ public class NewRecipeActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        //THIS WORKS
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data){
+        switch (requestCode){
+            case RESULT_LOAD_IMAGE:
+                if (resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
 
+                    imageURI = selectedImage.toString();
+                    imgRecipePhoto.setImageURI(selectedImage);
+                    imgRecipePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Drawable drawable = imgRecipePhoto.getDrawable();
+                    imageBitmap = ((BitmapDrawable) drawable).getBitmap();
+                    imageByteArray = Utility.getBytes(imageBitmap);
+                    //encodeImage64 = Utility.encodeToBase64(imageBitmap);
+                }
+                break;
+
+            case CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE:
+                if (resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
+
+                    imageURI = selectedImage.toString();
+                    imgRecipePhoto.setImageURI(selectedImage);
+                    imgRecipePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Drawable drawable = imgRecipePhoto.getDrawable();
+                    imageBitmap = ((BitmapDrawable) drawable).getBitmap();
+                    imageByteArray = Utility.getBytes(imageBitmap);
+                    //encodeImage64 = Utility.encodeToBase64(imageBitmap);
+                }
+                break;
+        }
+
+        //THIS WORKS
+        /*if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data){
             Uri selectedImage = data.getData();
 
             imageURI = selectedImage.toString();
@@ -245,7 +266,7 @@ public class NewRecipeActivity extends AppCompatActivity {
             imageBitmap = ((BitmapDrawable) drawable).getBitmap();
             imageByteArray = Utility.getBytes(imageBitmap);
             //encodeImage64 = Utility.encodeToBase64(imageBitmap);
-        }
+        }*/
     }
 
     public ArrayList<IngredientObject> getIngredientList() {
