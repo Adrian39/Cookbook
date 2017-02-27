@@ -289,65 +289,6 @@ public class DBAdapter {
                 Toast.makeText(context, "An error has occurred when attempting to create the 'Link Table'", Toast.LENGTH_SHORT).show();
             }
 
-            /*try {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T1_NAME, "Test");
-                contentValues.put(DBHelper.T1_CATEGORY, "Test");
-                contentValues.put(DBHelper.T1_TIME, 1);
-                contentValues.put(DBHelper.T1_PREPARATION, "Test");
-                contentValues.put(DBHelper.T1_SERVINGS, 1);
-                db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
-                Toast.makeText(context, "Successfully added test recipe", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T1_NAME, "Test2");
-                contentValues.put(DBHelper.T1_CATEGORY, "Test2");
-                contentValues.put(DBHelper.T1_TIME, 1);
-                contentValues.put(DBHelper.T1_PREPARATION, "Test2");
-                contentValues.put(DBHelper.T1_SERVINGS, 1);
-                db.insert(DBHelper.TABLE_1_NAME, null, contentValues);
-                Toast.makeText(context, "Successfully added test2 recipe", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T2_NAME, "Alpha");
-                contentValues.put(DBHelper.T2_CATEGORY, "Test");
-                contentValues.put(DBHelper.T2_IN_STOCK, 1);
-                contentValues.put(DBHelper.T2_NEEDED, 1);
-                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
-                Toast.makeText(context, "Successfully added test ingredient", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T2_NAME, "Bravo");
-                contentValues.put(DBHelper.T2_CATEGORY, "Test2");
-                contentValues.put(DBHelper.T2_IN_STOCK, 1);
-                contentValues.put(DBHelper.T2_NEEDED, 1);
-                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
-                Toast.makeText(context, "Successfully second test ingredient", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(DBHelper.T2_NAME, "Charlie");
-                contentValues.put(DBHelper.T2_CATEGORY, "Test3");
-                contentValues.put(DBHelper.T2_IN_STOCK, 1);
-                contentValues.put(DBHelper.T2_NEEDED, 1);
-                db.insert(DBHelper.TABLE_2_NAME, null, contentValues);
-                Toast.makeText(context, "Successfully third test ingredient", Toast.LENGTH_SHORT).show();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }*/
         }
 
         @Override

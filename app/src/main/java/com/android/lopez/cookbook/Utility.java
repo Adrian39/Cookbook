@@ -1,9 +1,7 @@
 package com.android.lopez.cookbook;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-
 import java.io.ByteArrayOutputStream;
 
 /**
