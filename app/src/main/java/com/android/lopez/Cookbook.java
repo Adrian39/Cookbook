@@ -15,4 +15,5 @@ public class Cookbook extends Application {
         dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.openDB();
     }
+    //TODO Prompt and check for permissions at the beginning of the program.
 }
