@@ -212,16 +212,21 @@ public class NewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //CAMERA ACTIVITY
+                //ASKING PERMISSIONS ON USE
                 if (!marshmallowPermissions.checkPermissionForCamera()){
                     marshmallowPermissions.requestPermissionForCamera();
-                } else {
+                }
+                else{
                     if (!marshmallowPermissions.checkPermissionForExternalStorage()){
                         marshmallowPermissions.requestPermissionForExternalStorage();
-                    } else {
+                    }
+                    else{
                         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(cameraIntent, RESULT_LOAD_IMAGE);
                     }
                 }
+
+
             }
         });
 

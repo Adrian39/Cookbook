@@ -2,6 +2,7 @@ package com.android.lopez;
 
 import android.app.Application;
 
+import com.android.lopez.cookbook.MarshmallowPermissions.MarshmallowPermissions;
 import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
 
 /**
@@ -15,5 +16,5 @@ public class Cookbook extends Application {
         dbAdapter = new DBAdapter(getApplicationContext());
         dbAdapter.openDB();
     }
-    //TODO Prompt and check for permissions at the beginning of the program.
+
 }
