@@ -34,8 +34,6 @@ import com.android.lopez.cookbook.RecyclerViewAdapters.IngredientEditorAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.DBAdapter;
 import com.android.lopez.cookbook.SQLiteDatabase.IngredientObject;
 import com.android.lopez.cookbook.Utility;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class NewRecipeActivity extends AppCompatActivity {

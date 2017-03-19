@@ -138,6 +138,13 @@
                     android:progress="1" />
             </RelativeLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ingredientsInNewRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -173,13 +180,6 @@
                     android:textSize="14sp" />
 
             </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/ingredientsInNewRecipe"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
             <EditText
                 android:id="@+id/txtRecipePreparation"
